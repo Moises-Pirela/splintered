@@ -10,13 +10,10 @@
 struct QueueFamilyIndices
 {
     std::optional<u32> GraphicsFamily;
+    std::optional<u32> PresentFamily;
 
      bool IsComplete() {
-
-        //EM_DEBUG("u32 %d : int %d", GraphicsFamily, (int)GraphicsFamily);
-       // EM_DEBUG("familiy %d", &GraphicsFamily.value);
-
-        return GraphicsFamily.has_value();
+        return GraphicsFamily.has_value() && PresentFamily.has_value();
     }
 };
 
@@ -33,12 +30,28 @@ struct VulkanContext {
     VkAllocationCallbacks* Allocator;
     VulkanDevice VulkanDevice;
     VkQueue GraphicsQueue;
+    VkQueue PresentQueue;
     VkSurfaceKHR Surface;
+    VkSwapchainKHR SwapChain;
     VkDebugUtilsMessengerEXT DebugMessenger;
+    std::vector<VkImage> SwapChainImages;
+    VkFormat SwapChainImageFormat;
+    VkExtent2D SwapChainExtent;
+};
+
+struct SwapChainSupport
+{
+    VkSurfaceCapabilitiesKHR Capabilities;
+    std::vector<VkSurfaceFormatKHR> Formats;
+    std::vector<VkPresentModeKHR> PresentModes;
 };
 
 const std::vector<const char*> ValidationLayers = {
     "VK_LAYER_KHRONOS_validation"
+};
+
+const std::vector<const char*> DeviceExtensions = {
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME
 };
 
 #if defined(_DEBUG) 
@@ -59,8 +72,15 @@ class Renderer {
     void CreateDebugger();
     bool PickPhysicalDevice();
     void CreateLogicalDevice();
+    void CreateSwapChain(WindowState* state);
     bool IsDeviceCompatible(VkPhysicalDevice device);
+    bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
     QueueFamilyIndices FindQueueFamilies(VkPhysicalDevice device);
+    SwapChainSupport QuerySwapChainSupport(VkPhysicalDevice device);
+    VkSurfaceFormatKHR ChooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+    VkPresentModeKHR ChooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+    VkExtent2D ChooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, WindowState* state);
+    VkDevice GetLogicalDevice();
     void Shutdown();
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL VulkanDebugCallback(

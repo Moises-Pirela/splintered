@@ -30,9 +30,6 @@
 *.exe
 *.out
 *.app
-/game/.vs/Emoli/config
-/game/.vs/Emoli/v17
 /game/.vscode
 /game/.vs
-/game/bin/.vs/engine/v17
 /game/bin
