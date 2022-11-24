@@ -6,7 +6,8 @@ ECHO "Building everything..."
 
 PUSHD engine
 CALL build.bat
-POPD
 IF %ERRORLEVEL% NEQ 0 (echo Error:%ERRORLEVEL% && exit )
+CALL compile-shaders.bat
+POPD
 
 ECHO "All assemblies built successfully."

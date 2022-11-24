@@ -13,7 +13,7 @@ REM echo "Files:" %cFilenames%
 SET assembly=engine
 SET compilerFlags=-g -Wvarargs -Wall -Werror
 REM -Wall -Werror
-SET includeFlags=-std=c++17 -Isrc -I%VULKAN_SDK%/Include
+SET includeFlags=-std=c++17 -Isrc -Isrc/vendor -I%VULKAN_SDK%/Include
 SET linkerFlags=-luser32 -lglfw3 -lgdi32  -lvulkan-1 -L%VULKAN_SDK%/Lib
 SET defines=-D_DEBUG -DEM_EXPORT -D_CRT_SECURE_NO_WARNINGS
 
