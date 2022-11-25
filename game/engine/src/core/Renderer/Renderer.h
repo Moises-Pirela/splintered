@@ -47,6 +47,8 @@ struct VulkanContext {
     std::vector<VkSemaphore> ImageAvailableSemaphores;
     std::vector<VkSemaphore> RenderFinishedSemaphores;
     std::vector<VkFence> InFlightFences;
+    VkBuffer VertexBuffer;
+    VkDeviceMemory VertexBufferMemory;
 };
 
 struct SwapChainSupport
@@ -136,4 +138,8 @@ private:
     void CreateCommandBuffer();
     void RecordCommandBuffer(VkCommandBuffer commandBuffer, u32 imageIndex);
     void CreateSyncObjects();
+    void CreateVertexBuffer();
+    void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
+    void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+    u32  FindMemoryType(u32 typeFilter, VkMemoryPropertyFlags properties);
 };

@@ -16,7 +16,7 @@ int WINAPI main() {
     Renderer mainRenderer;
 
 
-    if (!mainWindow.Open("Splintered - Vulkan", 1000, 1000, 800, 600)) {
+    if (!mainWindow.Open("Splintered - Vulkan", 0, 0, 800, 600)) {
         return -1;
     }
 
